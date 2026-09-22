@@ -1,0 +1,13 @@
+# Private source and processed study data
+data/
+
+# Jupyter-generated private outputs
+results/private/
+.ipynb_checkpoints/
+outputs/
+.venv/
+
+# Local Python artifacts
+__pycache__/
+*.py[cod]
+scripts/node_modules/
