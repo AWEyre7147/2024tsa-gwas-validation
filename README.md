@@ -8,7 +8,7 @@ This repository is being prepared to document and reproduce analyses of the inde
 2. Conduct exploratory, breed-specific association analyses of behavioral elimination in LR and GSP. A combined-breed analysis may be used as a sensitivity check.
 3. Annotate selected canine loci with nearby genes, human orthologs, and published human behavioral or neurological associations. These annotations support exploratory interpretation.
 
-The intended derivative phenotype codes are `2` for behavioral elimination, `1` for controls, and `0` for missing or excluded outcomes. Scheme A uses Validated controls; Scheme B adds explicitly recorded other eliminations as controls. Both use the same behavioral cases. January 2024 metadata is accepted as primary under the investigator's assumption that historical corrections were completed; historical plate flags are not exclusion criteria. Source FAM `-9` values remain unchanged.
+The intended derivative phenotype codes are `2` for behavioral elimination, `1` for controls, and `0` for missing or excluded outcomes. Scheme A uses 'Successful' dogs as controls; Scheme B adds explicitly recorded other eliminations (environmental, medical, etc.) as controls. Both use the same behavioral cases. January 2024 metadata is accepted as primary under the investigator's assumption that historical corrections to dog identity and genotypes were completed.
 
 The analysis plan, correction methods, assembly choice, and notebook will be documented before association results are generated. Updated outcome and identifier information has been requested and is pending.
 
