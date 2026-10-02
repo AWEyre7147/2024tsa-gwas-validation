@@ -1,6 +1,10 @@
 # Private source and processed study data
 data/
 
+# Private Obsidian reference containing dog identifiers and linked outcomes
+docs/references/phewas_table_3_private.md
+docs/raw/
+
 # Jupyter-generated private outputs
 results/private/
 .ipynb_checkpoints/
@@ -11,3 +15,6 @@ outputs/
 __pycache__/
 *.py[cod]
 scripts/node_modules/
+
+# Local Obsidian application state
+docs/.obsidian/
