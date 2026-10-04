@@ -1,0 +1,16 @@
+{
+  "schemes": ["success-vs-behelim", "not-behelim-vs-behelim"],
+  "primary_scheme": "success-vs-behelim",
+  "genotypes": "Measured aligned QC genotypes only; imputed scans deferred",
+  "meta_analysis": "GEMMA fixed-effect inverse-variance beta/SE; GMMAT sum of aligned independent score and information",
+  "fisher_tests": ["GEMMA_wald_p", "GEMMA_lrt_p", "GEMMA_p", "GMMAT_p"],
+  "marker_family": "Intersection of aligned candidate loci with identical CanFam4 coordinate and REF/ALT; require cohort MAF >= 0.025 in each breed for inference",
+  "alpha": 0.05,
+  "correction": "Within each analysis: alpha/common aligned candidate count before cohort filtering; no across-method correction",
+  "independence": "Disjoint dog IDs required; no known cross-breed family links; unresolved cross-breed dependence remains a limitation",
+  "pooled_covariates": ["intercept", "sex", "breed"],
+  "pooled_relationship": "Shared aligned background from union of breed LD-pruned sets; center and scale separately within each broader breed, then form one LOCO cross-product matrix",
+  "pooled_missing": "Within-breed and scheme mean ALT dosage; same numeric inputs for both methods",
+  "pooled_role": "Exploratory sensitivity only; inclusion in publication undecided",
+  "interpretation": "No automatic discovery claims; meta-analysis inherits small-case and fit limitations; two-breed heterogeneity is weakly estimated; no automatic genomic-control rescaling"
+}

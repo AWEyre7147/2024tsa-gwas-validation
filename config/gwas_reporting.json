@@ -1,0 +1,11 @@
+{
+  "family_alpha": 0.05,
+  "family": "Within each breed-specific analysis; no correction across breeds, methods or GEMMA test types",
+  "candidate_markers": {"LR": 168341, "GSP": 165064},
+  "reporting_method": "GEMMA",
+  "comparison_method": "GMMAT",
+  "gemma_tests": ["Wald", "Likelihood ratio", "Score"],
+  "single_primary_gemma_test": null,
+  "interpretation": "Report each test explicitly; do not select the smallest p-value as independent corroboration",
+  "decision": "Investigator requested within-analysis cutoffs and GEMMA laboratory-workflow reporting after review, 2026-10-04"
+}

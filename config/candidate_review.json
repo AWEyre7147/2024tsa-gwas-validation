@@ -1,0 +1,11 @@
+{
+  "selection": "Union of Scheme A GEMMA Wald and likelihood-ratio candidates at current within-analysis cutoffs",
+  "window_bp": 500000,
+  "region_definition": "Merge overlapping same-chromosome display windows within breed; not a declaration of independent loci",
+  "display_anchor": "Smallest finite GEMMA Wald p-value among selected candidates in each region; not a causal ranking",
+  "ld": "Squared Pearson correlation of measured ALT counts using pairwise complete primary-cohort dogs",
+  "carrier_allele": "Less frequent measured allele at the anchor in Scheme A",
+  "relatedness": "Supplied chromosome-excluded standardized relationship matrix; descriptive, not pedigree inference",
+  "stability": "Observed counts, model coefficients/SE, variance boundaries and control-definition sensitivity; no new genome-wide tests",
+  "interpretation": "Descriptive candidate review; no causal credible sets, conditional discoveries or biological annotation"
+}

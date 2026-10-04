@@ -1,0 +1,16 @@
+{
+  "models": ["GMMAT", "GEMMA"],
+  "breeds": ["LR", "GSP"],
+  "primary_cohort": "success-vs-behelim",
+  "sensitivity_cohort": "not-behelim-vs-behelim",
+  "genotypes": "Aligned QC-passed measured autosomal genotypes only",
+  "covariates": ["intercept", "sex"],
+  "principal_components": 0,
+  "minimum_cohort_maf": 0.025,
+  "missing_genotypes": "Within-cohort mean ALT dosage supplied identically to both methods; observed counts retained separately",
+  "relationship_matrix": "Within-breed LD-pruned background retained after alignment; broader-cohort centering and aligned-chromosome exclusion",
+  "comparison": "Paired score tests; neither method chosen by smaller observed p-values",
+  "family_alpha": 0.05,
+  "family": "All aligned candidates in both breeds x 2 methods; Scheme B sensitivity only",
+  "interpretation": "Exploratory measured baseline; small-case calibration unresolved; no automatic discovery claims"
+}

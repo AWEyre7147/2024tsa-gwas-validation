@@ -1,0 +1,18 @@
+{
+  "seed": 20261004,
+  "breed": "LR",
+  "models": ["GMMAT", "GEMMA"],
+  "covariates": ["intercept", "sex"],
+  "principal_components": 0,
+  "genotypes": "QC-passed measured ALT copies; complete cases separately at each target",
+  "relationship_matrix": "Standardized LD-pruned LR background, centered using broader cohort; leave tested chromosome out",
+  "primary_cohort": "success-vs-behelim",
+  "sensitivity_cohort": "not-behelim-vs-behelim",
+  "primary_test_status": "Not chosen; paired model evaluation and calibration only",
+  "historical_target_count": 18,
+  "measured_target_count": 12,
+  "family_alpha": 0.05,
+  "conservative_comparison_family": "18 historical markers x 2 methods; sensitivity cohort not a second route to a positive claim",
+  "calibration_replicates": 100,
+  "calibration_status": "Initial conditional parametric null screen; not sufficient to validate extreme tail probabilities"
+}

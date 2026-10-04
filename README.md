@@ -1,33 +1,57 @@
 # 2024TSA canine behavioral outcome study
 
-This repository is being prepared to document and reproduce analyses of the independent 2024TSA cohort. The study includes Labrador Retrievers (LR) and German Shorthaired Pointers (GSP).
+Computational publication notebooks for the independent 2024TSA Labrador Retriever (LR) and German Shorthaired Pointer (GSP) cohort. Each chapter combines a readable scientific account with executable analysis steps.
 
-## Planned study
+The study evaluates predefined 2013TSA Labrador loci, explores measured-genotype associations within breeds, and compares evidence across breeds. Biological annotation and manuscript exports remain in development. The prior discovery study is [Eyre et al., Scientific Reports 12, 14984 (2022)](https://doi.org/10.1038/s41598-022-18698-4).
 
-1. Test whether loci reported in the 2013TSA Labrador Retriever discovery cohort replicate in the 2024TSA Labrador cohort.
-2. Conduct exploratory, breed-specific association analyses of behavioral elimination in LR and GSP. A combined-breed analysis may be used as a sensitivity check.
-3. Annotate selected canine loci with nearby genes, human orthologs, and published human behavioral or neurological associations. These annotations support exploratory interpretation.
+## Read the study
 
-The intended derivative phenotype codes are `2` for behavioral elimination, `1` for controls, and `0` for missing or excluded outcomes. Scheme A uses Validated controls; Scheme B adds explicitly recorded other eliminations as controls. Both use the same behavioral cases. January 2024 metadata is accepted as primary under the investigator's assumption that historical corrections were completed; historical plate flags are not exclusion criteria. Source FAM `-9` values remain unchanged.
+Start with the [notebook sequence](notebooks/README.md). The adopted computational format is now the sole public notebook set under `notebooks/`.
 
-The analysis plan, correction methods, assembly choice, and notebook will be documented before association results are generated. Updated outcome and identifier information has been requested and is pending.
+| Chapters | Coverage | Status |
+| --- | --- | --- |
+| 00–02 | Workflow, prepared inputs, genetic QC and reference alignment | Implemented |
+| 03 | PCA, UMAP, t-SNE and relatedness | Implemented |
+| 04–05 | Whole-autosome phasing, imputation and hidden-genotype validation | Completed for both breeds |
+| 06 | Measured historical Labrador targets, GMMAT and GEMMA | Implemented; directional replication interpretation remains pending |
+| 07 | Separate-breed measured GWAS | Completed across 38 autosomes |
+| 08 | Cross-breed meta-analysis and exploratory pooled scans | Completed; pooled publication inclusion undecided |
+| 09 | Measured candidate-region review | Implemented |
+| 10–12 | Annotation, biological context and manuscript outputs | Planned; upstream input checks provided |
 
-## Data handling
+GEMMA is the laboratory reporting workflow; GMMAT provides a separate methodological comparison. Their results are never combined. Candidate probabilities retain small-case and model-fit limitations and are not automatic discovery claims. Imputed association scans are deferred.
 
-All source files, processed genotypes, original dog identifiers, and the study-ID mapping remain under `data/`, which Git ignores. Source data remain unchanged. Prepared inputs use stable pseudonymous `LR###` and `GSP###` identifiers; the crosswalk is private. Preparation scripts and original individual Obsidian notes are retained in a private external archive.
+Supporting [methods notes](docs/methods/README.md) use chapter numbers and can be opened in Obsidian. The [study design](docs/analysis_plan.md) records phenotype definitions and analytical scope.
 
-Public notebooks and figures will be reviewed for embedded row-level data and identifiers before publication. No data or results are approved for public release at this stage.
+## Run the notebooks
 
-## Current contents
+Use the project Python environment described in Notebook 00. Install the scientific dependencies into that environment:
 
-- [Notebook sequence](notebooks/README.md): brief, unexecuted chapters from input preparation through independent LR replication, supporting discovery, and manuscript outputs.
-- [Current design](docs/analysis_plan.md): accepted scope, phenotype definitions, privacy policy, and execution gates.
+```text
+python -m pip install -r scripts/requirements-structure.txt
+python -m ipykernel install --user --name tsa2024 --display-name tsa2024
+```
 
-- `data/input/<scenario>/<breed>/`: the four private, unfiltered BED/BIM/FAM candidate datasets for `success-vs-behelim` and `not-behelim-vs-behelim`, each separated into GSP and LR.
-- `data/processed/cohorts/`: private candidate tables for the two phenotype schemes and their comparison record; these are pre-QC candidates.
-- `data/processed/references/`: readable extracts of the three requested historical tables, with captions and provenance.
-- `data/processed/genotype/` and `data/processed/private/`: genotype derivatives and private ID crosswalk.
+Open Jupyter Notebook and select the `tsa2024` kernel. A Jupyter frontend must also be installed in the environment from which you launch it. Fresh phasing/imputation and native association inference require the WSL/Linux kernel and separate tool environments:
 
-Earlier investigation records and scripts are archived outside the repository. PM correspondence and outcome-request workbooks are also maintained outside this publication repository.
+```bash
+bash scripts/setup_imputation_wsl.sh
+bash scripts/setup_association_wsl.sh
+python scripts/setup_plink.py
+```
 
-The prior discovery study is [Eyre et al., *Scientific Reports* 12, 14984 (2022)](https://doi.org/10.1038/s41598-022-18698-4).
+Notebooks show script calls, selected calculations and figure loading. Completed runs are reused after their recorded checks; fresh inference switches are explicit. Frozen input or model specifications require a new output folder when changed. See the notebook guide and numbered methods notes for stage-specific instructions.
+
+## Repository contents and data access
+
+- `notebooks/`: the 13 canonical publication chapters and their guide.
+- `scripts/`: active analysis, resource-download and verification tools, with pinned environment files.
+- `config/`: analytical and reporting settings.
+- `docs/methods/`: numbered methods notes; `docs/references/` contains public aggregate study references.
+- `data/` and `results/private/`: local study data, shared reference assets, native fits and executed review notebooks; Git ignores these directories.
+
+Individual genotypes, dog identifiers, outcomes and the study-ID crosswalk are not distributed here. Reproduction requires authorized prepared inputs selected by `data/input/manifest.private.json`. Source QC genotypes in CanFam3.1 are preserved; aligned CanFam4 derivatives support the current analyses. CanineHD manifests, reference genomes and the Dog10K panel remain in the private local asset cache.
+
+Public notebook sources have outputs cleared. Executed copies with figures remain under `results/private/`; they are not included in a push. Earlier notebook editions and superseded pilot tools are preserved privately, outside the public tree.
+
+Before committing notebook edits, run `python scripts/check_repository.py` to check source notebooks, local links and the Git publication boundary.

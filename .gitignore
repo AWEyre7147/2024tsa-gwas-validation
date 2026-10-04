@@ -8,13 +8,22 @@ docs/raw/
 # Jupyter-generated private outputs
 results/private/
 .ipynb_checkpoints/
+.virtual_documents/
 outputs/
 .venv/
+.env
+.env.*
+!.env.example
 
 # Local Python artifacts
 __pycache__/
 *.py[cod]
 scripts/node_modules/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+Thumbs.db
 
 # Local Obsidian application state
 docs/.obsidian/

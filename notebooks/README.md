@@ -1,25 +1,35 @@
-# 2024TSA notebook sequence
+# Computational publication notebooks
 
-Brief, unexecuted methodological chapters. Complex implementation will live in documented scripts; detailed explanations and artifact notes belong in Obsidian. No environment installation or genetic analysis is performed by this scaffold.
+Work through these chapters in order with the project Python kernel. Each chapter pairs the scientific narrative with meaningful code for data loading, script calls, selected calculations and figures. Prepared, authorized private inputs are required; raw metadata reconciliation is retained separately.
 
-| Notebook | Purpose |
+| Notebook | Coverage |
 | --- | --- |
-| [00_workflow_blueprint.ipynb](00_workflow_blueprint.ipynb) | Define the manuscript claims, accepted metadata policy, and gates for the workflow. |
-| [01_inputs_and_phenotypes.ipynb](01_inputs_and_phenotypes.ipynb) | Create reproducible analysis inputs without altering the unfiltered facility files. |
-| [02_array_qc.ipynb](02_array_qc.ipynb) | Document and reproduce defensible QC of the unfiltered genotype calls. |
-| [03_structure_and_model_design.ipynb](03_structure_and_model_design.ipynb) | Assess whether the available cohorts can support the planned binary association models. |
-| [04_phasing_imputation_pilot.ipynb](04_phasing_imputation_pilot.ipynb) | Attempt a compatible, auditable pilot before using imputed variants for association. |
-| [05_imputation_validation.ipynb](05_imputation_validation.ipynb) | Validate imputation performance before admitting imputed variants to association tests. |
-| [06_2013tsa_lr_replication.ipynb](06_2013tsa_lr_replication.ipynb) | Test the predefined historical targets in independent 2024TSA LR dogs. |
-| [07_breed_specific_gwas.ipynb](07_breed_specific_gwas.ipynb) | Run supporting discovery analyses within each breed under both phenotype schemes. |
-| [08_pooled_breed_sensitivity.ipynb](08_pooled_breed_sensitivity.ipynb) | Assess whether pooled LR/GSP evidence supports the breed-specific findings. |
-| [09_locus_followup_fine_mapping.ipynb](09_locus_followup_fine_mapping.ipynb) | Prioritize candidate variants and loci while keeping interpretation proportional to the evidence. |
-| [10_variant_gene_annotation.ipynb](10_variant_gene_annotation.ipynb) | Build traceable evidence layers for selected candidates. |
-| [11_exploratory_biological_context.ipynb](11_exploratory_biological_context.ipynb) | Explore biological context for selected candidates without expanding confirmatory claims. |
-| [12_manuscript_outputs.ipynb](12_manuscript_outputs.ipynb) | Assemble a traceable manuscript and curate a reusable framework only after the study is complete. |
+| [00 Workflow blueprint](00_workflow_blueprint.ipynb) | Environment and completed-stage checks |
+| [01 Inputs and phenotypes](01_inputs_and_phenotypes.ipynb) | Prepared genotype validation and group counts |
+| [02 Array QC](02_array_qc.ipynb) | QC, reference alignment and completed-data verification |
+| [03 Structure and model design](03_structure_and_model_design.ipynb) | PCA, UMAP, t-SNE, alternative layouts, relatedness and figures |
+| [04 Phasing and imputation](04_phasing_imputation.ipynb) | Whole-autosome preparation, inference and measured-call recovery |
+| [05 Imputation validation](05_imputation_validation.ipynb) | Hidden-genotype review and confidence comparison |
+| [06 Historical Labrador replication](06_2013tsa_lr_replication.ipynb) | Measured targets, paired GMMAT/GEMMA models and initial null simulations |
+| [07 Breed-specific GWAS](07_breed_specific_gwas.ipynb) | Measured scans, within-analysis cutoffs, all three GEMMA tests and GMMAT comparison |
+| [08 Cross-breed comparisons](08_pooled_breed_sensitivity.ipynb) | Inverse-variance meta-analysis first, separate score meta-analysis, Fisher comparisons and exploratory pooling |
+| [09 Candidate-region review](09_locus_followup_fine_mapping.ipynb) | Local association and LD plots, genotype counts, carrier relatedness and model comparisons |
+| [10 Variant and gene annotation](10_variant_gene_annotation.ipynb) | Resource checks; annotation pending |
+| [11 Biological context](11_exploratory_biological_context.ipynb) | Study-context checks; biological analyses pending |
+| [12 Manuscript outputs](12_manuscript_outputs.ipynb) | Chapter inventory; export pending |
 
-Start with 00–03 to freeze inputs, QC, and model design. Notebooks 04–05 handle imputation feasibility and validation; 06 can use accepted directly genotyped targets without successful imputation. Independent LR replication in 06 is the central claim. Breed-specific discovery in 07 and pooled sensitivity in 08 support it. Follow-up in 09–11 is conditional on useful evidence; 12 assembles the manuscript.
+## Environment and execution
 
-Both association phenotype definitions are explicit: **A**, Validated versus Eliminated/Behavioral; **B**, Validated plus explicitly recorded other eliminations versus the same behavioral cases. Missing phenotype is 0 in intended derivatives; source FAM -9 values remain unchanged. January metadata is accepted as primary without historical plate exclusions. Updated PM data will be versioned and reconciled rather than silently replacing inputs.
+Notebook 00 explains the project kernel. Scientific dependencies are pinned in [requirements-structure.txt](../scripts/requirements-structure.txt); UMAP is supplied by `umap-learn`. Native PLINK is discovered from the project cache installed by `python scripts/setup_plink.py`.
 
-Notebooks contain three short Markdown cells and one comment-only implementation placeholder. Execution counts are null and outputs are empty. The Python kernel label describes the future runtime; it does not establish an installed environment. Public sources remain output-cleared; executed notebooks, individual outcomes, and the ID crosswalk stay private.
+Fresh phasing/imputation and association inference use WSL/Linux. Install native tools with [setup_imputation_wsl.sh](../scripts/setup_imputation_wsl.sh) and [setup_association_wsl.sh](../scripts/setup_association_wsl.sh). Downloads and tool environments remain separate from the notebook kernel. Use the resource-download cells or [download_imputation_assets.py](../scripts/download_imputation_assets.py) for shared public assets.
+
+Completed QC, alignment and inference are reused. Structure analysis retains its existing platform-specific private run names. Change run/output folders when changing inputs or frozen specifications; QC and alignment refuse to overwrite completed datasets. Notebook 08 defaults to reviewing completed results, with explicit switches for regeneration or fresh pooled inference. The pooled exercise remains exploratory and its publication inclusion is undecided.
+
+Chapters 00–09 implement the described analyses and checks. Chapters 10–12 provide runnable upstream checks, not completed scientific analyses. Historical effect matching and further small-sample assessment remain before directional replication or discovery conclusions. Imputed scans remain deferred. Static study tables and conclusions require review when adapting the pipeline to different data.
+
+## Figures and supporting notes
+
+Notebook code loads figures where they are discussed. Executed review copies, individual-level output and figure files remain under ignored `results/private/` paths. Source notebooks are output-cleared for GitHub; do not publish executed copies without reviewing their contents. Existing private paths containing `version2` are retained to preserve completed run references.
+
+[Numbered methods notes](../docs/methods/README.md) hold implementation details and are compatible with Obsidian. The notebooks carry the publication narrative.
