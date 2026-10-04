@@ -4,6 +4,8 @@ Computational publication notebooks for the independent 2024TSA Labrador Retriev
 
 The study evaluates predefined 2013TSA Labrador loci, explores measured-genotype associations within breeds, and compares evidence across breeds. Biological annotation and manuscript exports remain in development. The prior discovery study is [Eyre et al., Scientific Reports 12, 14984 (2022)](https://doi.org/10.1038/s41598-022-18698-4).
 
+Phenotype codes are `2` for behavioral elimination, `1` for controls, and `0` for missing or excluded outcomes. Scheme A uses successful dogs (Validated or Certified, with a blank elimination reason) as controls. Scheme B adds explicitly recorded other eliminations, including medical, environmental and inconsistency outcomes; both schemes use the same behavioral cases. January 2024 metadata is accepted as primary under the investigator's assumption that historical identity and genotype corrections were completed.
+
 ## Read the study
 
 Start with the [notebook sequence](notebooks/README.md). The adopted computational format is now the sole public notebook set under `notebooks/`.
