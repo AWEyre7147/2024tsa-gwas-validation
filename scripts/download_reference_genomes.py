@@ -7,7 +7,7 @@ import shutil
 import subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
-DEST=ROOT/'data/reference/genomes'
+DEST=ROOT/'data/02-reference/genomes'
 
 
 def fetch(assembly):

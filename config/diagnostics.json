@@ -1,0 +1,18 @@
+{
+  "output_directory": "results/private/version2/02_additional_qc/20261013-v4",
+  "sex_assembly": "CanFam3.1",
+  "X_nonPAR_code": "39",
+  "PAR_code": "41",
+  "conservative_X_min_bp": 7000000,
+  "X_maf_min": 0.05,
+  "X_missingness_max": 0.1,
+  "X_pruning": [50, 5, 0.2],
+  "female_max_F": 0.2,
+  "male_min_F": 0.8,
+  "sex_threshold_interpretation": "Conventional screening flags, not validated canine classification thresholds; no phenotype/sex changes",
+  "heterozygosity_z_flag": 3.0,
+  "heterozygosity_background": "Existing broader-breed LD-pruned autosomal measured markers and within-breed frequencies",
+  "missingness_families": ["prepared_structurally_eligible", "aligned_analysis"],
+  "missingness_alpha": 0.05,
+  "action": "Diagnostics only; no exclusions, genotype alterations or association reruns"
+}

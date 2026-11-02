@@ -26,19 +26,19 @@ def decode(prefix):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output',type=Path,default=ROOT/'data/gwas/measured-20261004')
+    parser.add_argument('--output',type=Path,default=ROOT/'data/07-gwas/measured-20261004')
     parser.add_argument('--tools',type=Path,default=Path.home()/'anaconda3/envs/tsa2024-association/bin')
     parser.add_argument('--chromosomes',type=int,nargs='+',default=list(range(1,39)))
     args=parser.parse_args();assert set(args.chromosomes)<=set(range(1,39))
     out=args.output.resolve();out.mkdir(parents=True,exist_ok=True)
     cfg=read_json(ROOT/'config/gwas.json')
-    alignment=read_json(ROOT/'data/aligned/manifest.private.json');verify_datasets(ROOT,alignment)
+    alignment=read_json(ROOT/'data/02-aligned/manifest.private.json');verify_datasets(ROOT,alignment)
     sources={}
     for dataset in alignment['datasets']:
         for path,digest in dataset['files'].items():
             if Path(path).suffix in ['.bed','.bim','.fam']:sources[path]=digest
     for breed in cfg['breeds']:
-        bg=ROOT/'data/structure/20261002-pca-umap-tsne'/breed/'02_pruned_genotypes'
+        bg=ROOT/'data/03-structure/20261002-pca-umap-tsne'/breed/'02_pruned_genotypes'
         sources.update({str(bg.with_suffix(s).relative_to(ROOT)):file_digest(bg.with_suffix(s)) for s in ['.bed','.bim','.fam']})
     versions=dict(GEMMA=subprocess.check_output([str(args.tools/'gemma'),'-h'],text=True).splitlines()[:4],
         R=subprocess.check_output([str(args.tools/'Rscript'),'--version'],text=True).strip(),
@@ -50,12 +50,12 @@ def main():
     else:dump(out/'plan.private.json',plan)
     jobs=[];groups=[]
     for breed in cfg['breeds']:
-        broad=ROOT/'data/aligned'/cfg['sensitivity_cohort']/breed/('2024TSA_'+breed)
-        background=ROOT/'data/structure/20261002-pca-umap-tsne'/breed/'02_pruned_genotypes'
+        broad=ROOT/'data/02-aligned'/cfg['sensitivity_cohort']/breed/('2024TSA_'+breed)
+        background=ROOT/'data/03-structure/20261002-pca-umap-tsne'/breed/'02_pruned_genotypes'
         bg_ids,bg_chromosomes,z=standardized_background(background,broad.with_suffix('.bim'))
         idpos={value:i for i,value in enumerate(bg_ids)}
         for scenario in [cfg['primary_cohort'],cfg['sensitivity_cohort']]:
-            prefix=ROOT/'data/aligned'/scenario/breed/('2024TSA_'+breed)
+            prefix=ROOT/'data/02-aligned'/scenario/breed/('2024TSA_'+breed)
             fam,bim,g=decode(prefix)
             assert all(r[4] in ['1','2'] and r[5] in ['1','2'] for r in fam)
             if scenario==cfg['primary_cohort']:

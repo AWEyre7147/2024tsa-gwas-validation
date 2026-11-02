@@ -19,7 +19,7 @@ def main():
         name, asset, executable = 'win64', 'win64', 'plink.exe'
     else:
         raise RuntimeError('This setup supports x86-64 Windows and Linux/WSL.')
-    folder = ROOT / 'data/tools' / f'plink-1.9.0-{BUILD}-{name}'
+    folder = ROOT / 'data/02-tools' / f'plink-1.9.0-{BUILD}-{name}'
     folder.mkdir(parents=True, exist_ok=True)
     archive = folder / 'download.zip'
     url = f'https://s3.amazonaws.com/plink1-assets/plink_{asset}_{BUILD}.zip'

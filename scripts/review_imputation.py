@@ -11,7 +11,7 @@ import subprocess
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-RUN = ROOT / 'data/imputation/autosomal-20261003'
+RUN = ROOT / 'data/04-imputation/autosomal-20261003'
 OUT = RUN / 'review'
 BCF = Path.home() / 'anaconda3/envs/tsa2024-imputation/bin/bcftools'
 
@@ -64,7 +64,7 @@ def main():
                 median_r2=float(np.median([m['dosage_r2'] for m in defined])),
                 below_08=sum(m['dosage_r2']<.8 for m in defined),
                 negative_correlations=sum(m['signed_correlation']<0 for m in defined)))
-    targets = list(csv.DictReader((ROOT/'data/aligned/reports/replication_target_alignment.private.tsv').open(encoding='utf-8'), delimiter='\t'))
+    targets = list(csv.DictReader((ROOT/'data/02-aligned/reports/replication_target_alignment.private.tsv').open(encoding='utf-8'), delimiter='\t'))
     for target in targets:
         target['review_status'] = 'Excluded during QC; no imputation rescue assumed'
         if target['QC_status'] != 'retained': continue

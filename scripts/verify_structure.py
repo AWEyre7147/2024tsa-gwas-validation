@@ -19,7 +19,7 @@ def rows(p):return [r.split() for r in p.read_text().splitlines()]
 def packed(p,n,m):return np.frombuffer(p.with_suffix('.bed').read_bytes(),np.uint8,offset=3).reshape(m,(n+3)//4)
 def main():
     root=Path(__file__).resolve().parents[1]
-    out=root/'data/structure/20261002-pca-umap-tsne'
+    out=root/'data/03-structure/20261002-pca-umap-tsne'
     manifest=json.loads((out/'manifest.private.json').read_text())
     checks={}
     for scope in ['combined','GSP','LR']:
@@ -27,7 +27,7 @@ def main():
         j=np.arange(n);calls=(packed(p,n,m)[:,j//4]>>(2*(j%4)).astype(np.uint8))&3
         # The pooled merge must reproduce every call and allele from each breed.
         for breed in ([scope] if scope!='combined' else ['GSP','LR']):
-            source=root/f'data/qc/not-behelim-vs-behelim/{breed}/2024TSA_{breed}'
+            source=root/f'data/02-qc/not-behelim-vs-behelim/{breed}/2024TSA_{breed}'
             if scope!='combined':verify_calls(source,p)
             else:
                 sf=rows(source.with_suffix('.fam'));sb=rows(source.with_suffix('.bim'));vi={r[1]:i for i,r in enumerate(sb)};si={r[1]:i for i,r in enumerate(sf)}
@@ -62,15 +62,18 @@ def main():
         t=TSNE(n_components=2,perplexity=15,early_exaggeration=12,learning_rate='auto',max_iter=1500,init='pca',metric='euclidean',random_state=20261002,method='barnes_hut',n_jobs=1).fit_transform(x)
     assert np.array_equal(u,old_u) and np.array_equal(t,old_t)
     checks['repeated_LR_embeddings']={'umap_identical':True,'tsne_identical':True}
-    public=nbformat.read(root/'notebooks/03_structure_and_model_design.ipynb',as_version=4)
+    public=nbformat.read(root/'notebooks/03_structure_and_relatedness.ipynb',as_version=4)
     review=nbformat.read(root/'results/private/03_structure/03_structure_and_model_design.ipynb',as_version=4)
     nbformat.validate(public);nbformat.validate(review)
-    assert all(c.get('outputs',[])==[] and c.get('execution_count') is None for c in public.cells if c.cell_type=='code')
+    from build_notebook_previews import check_outputs,preview_record
+    check_outputs(public)
+    preview=json.loads((root/'config/notebook_previews.json').read_text())
+    assert preview['notebooks']['03_structure_and_relatedness.ipynb']==preview_record(json.loads(nbformat.writes(public)))
     attachments={name:base64.b64decode(data['image/png']) for c in review.cells for name,data in c.get('attachments',{}).items()}
     assert len(attachments)==9
     for name,data in attachments.items():assert data==(root/'results/private/03_structure/figures'/name).read_bytes()
     for path,h in manifest['figures'].items():assert hashlib.sha256((root/path).read_bytes()).hexdigest()==h
-    checks['notebook']={'embedded_figures':9,'public_outputs_cleared':True,'private_attachments_verified':True}
+    checks['notebook']={'embedded_figures':9,'public_preview_verified':True,'private_attachments_verified':True}
     (out/'verification.private.json').write_text(json.dumps(checks,indent=2)+'\n')
     print(json.dumps(checks,indent=2))
 

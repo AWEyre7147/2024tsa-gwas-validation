@@ -113,7 +113,10 @@ def summarize(run,output):
                 summaries[-1].update(wald_invalid=sum(not math.isfinite(r['GEMMA_wald_p']) for r in combined),
                     lrt_invalid=sum(not math.isfinite(r['GEMMA_lrt_p']) for r in combined),
                     effect_invalid=sum(not math.isfinite(r['GEMMA_beta']) or not math.isfinite(r['GEMMA_se']) for r in combined))
-        axes[-1].set_xticks(midpoints,labels=list(offsets));axes[-1].set_xlabel('CanFam4 autosome')
+        for ax in axes:
+            ax.set_xticks(midpoints, labels=list(offsets))
+            ax.tick_params(axis='x', labelbottom=True, labelsize=8)
+        axes[-1].set_xlabel('CanFam4 autosome')
         axes[-1].tick_params(axis='x',labelsize=8,labelrotation=90)
         fig.suptitle(title+' — measured-genotype GWAS');fig.tight_layout();fig.savefig(output/(stem+'_manhattan.png'),dpi=160);plt.close(fig)
         qq.suptitle(title+' — GEMMA tests and GMMAT comparison');qq.tight_layout();qq.savefig(output/(stem+'_qq.png'),dpi=160);plt.close(qq)
@@ -130,6 +133,6 @@ def summarize(run,output):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--run-dir',type=Path,default=ROOT/'data/gwas/measured-20261004')
+    parser.add_argument('--run-dir',type=Path,default=ROOT/'data/07-gwas/measured-20261004')
     parser.add_argument('--results-dir',type=Path,default=ROOT/'results/private/version2/07_breed_specific_gwas')
     args=parser.parse_args();summarize(args.run_dir,args.results_dir)

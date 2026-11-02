@@ -135,6 +135,6 @@ def summarize(run, output):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--run-dir',type=Path,default=ROOT/'data/replication/models-aligned-20261004')
+    parser.add_argument('--run-dir',type=Path,default=ROOT/'data/06-replication/models-aligned-20261004')
     parser.add_argument('--results-dir',type=Path,default=ROOT/'results/private/version2/06_2013tsa_lr_replication')
     args=parser.parse_args();summarize(args.run_dir,args.results_dir)

@@ -40,11 +40,14 @@ def run(run_dir,output):
             with (output/(scenario+'_'+key+'_candidates.private.tsv')).open('w',encoding='utf-8',newline='') as h:
                 w=csv.DictWriter(h,fieldnames=list(records[0]),delimiter='\t');w.writeheader();w.writerows(hits)
             analyses.append(dict(scenario=scenario,analysis=label,valid_tests=int(ok.sum()),invalid_tests=int((~ok).sum()),minimum_p=ranked[0][key],below_cutoff=len(hits),threshold=threshold,median_chi_square_ratio=float(np.median(chi2.isf(ordered,1))/chi2.ppf(.5,1)),gemma_mle_boundary_count=sum(r['GEMMA_lambda_mle']>=99999 or r['GEMMA_lambda_mle']<=1.00001e-5 for r in records) if label.startswith('GEMMA') else None,top=ranked[:10]))
-        axes[-1].set(xticks=[(x[c==ch].min()+x[c==ch].max())/2 for ch in offsets],xticklabels=list(offsets),xlabel='CanFam4 chromosome')
+        for ax in axes:
+            ax.set(xticks=[(x[c==ch].min()+x[c==ch].max())/2 for ch in offsets], xticklabels=list(offsets))
+            ax.tick_params(axis='x', labelbottom=True, labelsize=8)
+        axes[-1].set_xlabel('CanFam4 chromosome')
         fig.suptitle(scenario+' — pooled measured dogs, exploratory');fig.tight_layout();fig.savefig(output/(scenario+'_manhattan.png'),dpi=130);plt.close(fig);qq.tight_layout();qq.savefig(output/(scenario+'_qq.png'),dpi=130);plt.close(qq)
     summary=dict(status='exploratory_pooled_review_complete',groups=manifest['groups'],analyses=analyses,diagnostics=diagnostics,original_sources_unchanged=True,publication_inclusion_undecided=True,plan_sha256=file_digest(run_dir/'plan.private.json'),config_sha256=file_digest(ROOT/'config/cross_breed.json'),script_sha256=file_digest(Path(__file__)))
     (output/'summary.private.json').write_text(json.dumps(summary,indent=2)+'\n',encoding='utf-8')
     print('Exploratory pooled summaries complete.',flush=True)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run-dir',type=Path,default=ROOT/'data/gwas/pooled-measured-20261004');p.add_argument('--results-dir',type=Path,default=ROOT/'results/private/version2/08_cross_breed/pooled');a=p.parse_args();run(a.run_dir,a.results_dir)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run-dir',type=Path,default=ROOT/'data/07-gwas/pooled-measured-20261004');p.add_argument('--results-dir',type=Path,default=ROOT/'results/private/version2/08_cross_breed/pooled');a=p.parse_args();run(a.run_dir,a.results_dir)

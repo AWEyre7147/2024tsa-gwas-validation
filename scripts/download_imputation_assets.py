@@ -8,7 +8,7 @@ import shutil
 import urllib.request
 
 ROOT=Path(__file__).resolve().parents[1]
-DEST=ROOT/'data/reference/imputation-pilot'
+DEST=ROOT/'data/02-reference/imputation-pilot'
 ASSETS={
  'canFam3ToCanFam4.over.chain.gz':'https://hgdownload.soe.ucsc.edu/goldenPath/canFam3/liftOver/canFam3ToCanFam4.over.chain.gz',
  'canFam3ToROS.over.chain.gz':'https://hgdownload.soe.ucsc.edu/goldenPath/canFam3/liftOver/canFam3ToGCF_014441545.1.over.chain.gz',

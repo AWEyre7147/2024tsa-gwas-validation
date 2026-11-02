@@ -48,7 +48,7 @@ This resolves sequence orientation for 46/61 excluded GSP markers and 48/63 excl
 
 Interpreting palindromic calls with this mapping remains conditional on TOP reporting, strongly supported by all 155,330 comparable non-palindromic CanineHD marker pairs. Platform confirmation alone does not establish the export convention. This is coordinate-anchored sequence verification, not a genome-wide probe uniqueness check. No markers have yet been restored and no completed pilot files changed. Candidate restoration should be followed by reference-panel site checks, call verification, and repeated masked validation in a separate run.
 
-The earlier sequence-orientation check is retained privately in `data/reference/array-manifests/caninehd_sequence_orientation.private.json`. The active whole-dataset procedure is `scripts/reference_alignment.py`; see [[02 Reference alignment]].
+The earlier sequence-orientation check is retained privately in `data/02-reference/array-manifests/caninehd_sequence_orientation.private.json`. The active whole-dataset procedure is `scripts/reference_alignment.py`; see [[02 Reference alignment]].
 
 Useful archived items include the exact chip/manifest name and revision; the original CSV/BPM manifest; a GenomeStudio Final Report header showing whether calls were Top, Plus, Forward, or Design; and the script, software settings, or provider instructions used to create the PLINK files. A SNP annotation/map export containing probe sequence and strand fields may also resolve sites.
 
@@ -56,7 +56,7 @@ Once the convention is established, join by marker ID and verify the sequence co
 
 ## Records and sources
 
-[investigate_array_manifests.py](../../scripts/investigate_array_manifests.py) downloads the two manufacturer manifests and records reproducible overlap counts. Private manifest extracts, SHA256 values, expanded-table comparisons, and reports are under ignored `data/reference/array-manifests/`. The expanded-table comparison is an exploratory read-only analysis, separate from that script's manufacturer comparison.
+[investigate_array_manifests.py](../../scripts/investigate_array_manifests.py) downloads the two manufacturer manifests and records reproducible overlap counts. Private manifest extracts, SHA256 values, expanded-table comparisons, and reports are under ignored `data/02-reference/array-manifests/`. The expanded-table comparison is an exploratory read-only analysis, separate from that script's manufacturer comparison.
 
 - [Illumina canine product files](https://support.illumina.com/array/array_kits/caninehd_whole-genome_genotyping_kit/downloads.html)
 - [Illumina strand and allele interpretation](https://knowledge.illumina.com/microarray/general/microarray-general-reference_material-list/000001489)

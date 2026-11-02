@@ -12,7 +12,7 @@ tags:
 
 The final section of Notebook 02 aligns all four completed autosomal QC datasets from investigator-confirmed CanFam3.1 to CanFam4 / UU_Cfam_GSD_1.0, the Dog10K panel assembly. CanineHD platform identity is accepted from investigator confirmation. ROS_Cfam_1.0 remains the biological annotation target; this run does not create a ROS-aligned genotype dataset.
 
-Reusable resources remain under `data/reference/`: manufacturer CanineHD_B CSV, CanFam3.1 and CanFam4 complete two-bit genomes, and the UCSC conversion chain. Both genomes match UCSC's published MD5 checksums; SHA256 values and download URLs are saved in `data/reference/genomes/assets.json`. `scripts/download_reference_genomes.py` reproduces those downloads and checks.
+Reusable resources remain under `data/02-reference/`: manufacturer CanineHD_B CSV, CanFam3.1 and CanFam4 complete two-bit genomes, and the UCSC conversion chain. Both genomes match UCSC's published MD5 checksums; SHA256 values and download URLs are saved in `data/02-reference/genomes/assets.json`. `scripts/download_reference_genomes.py` reproduces those downloads and checks.
 
 ## Allele interpretation
 
@@ -35,9 +35,9 @@ All 12 predefined historical targets retained after QC in each breed remain avai
 
 ## Files and verification
 
-`data/aligned/<scenario>/<breed>/2024TSA_<breed>.{bed,bim,fam,vcf.gz}` preserves the input schema and breed/group organization. The BIM encodes ALT as A1 and REF as A2, with coordinates on CanFam4; PLINK can reorder these labels unless explicitly told to retain them. The VCF is unphased, source-genotype-derived, and sorted by target chromosome and position. It is not imputed and is not yet filtered for panel site compatibility. Current ordinary gzip VCFs can be converted to indexed BGZF as part of imputation preparation.
+`data/02-aligned/<scenario>/<breed>/2024TSA_<breed>.{bed,bim,fam,vcf.gz}` preserves the input schema and breed/group organization. The BIM encodes ALT as A1 and REF as A2, with coordinates on CanFam4; PLINK can reorder these labels unless explicitly told to retain them. The VCF is unphased, source-genotype-derived, and sorted by target chromosome and position. It is not imputed and is not yet filtered for panel site compatibility. Current ordinary gzip VCFs can be converted to indexed BGZF as part of imputation preparation.
 
-`scripts/reference_alignment.py` produces the derivatives, detailed decisions, coordinate-conversion command record, source snapshot, and `data/aligned/manifest.private.json`. Python verifies every retained BED call with the expected complement/order conversion from source, checks VCF agreement, and verifies all original QC hashes before and after. Sample metadata is preserved byte-for-byte. `scripts/verify_reference_alignment.py` independently exports each BED with the pinned PLINK build and compares every marker, allele label, sample order, and genotype against the VCF; all four comparisons passed. Temporary full exports are removed after verification; small logs and command records remain private.
+`scripts/reference_alignment.py` produces the derivatives, detailed decisions, coordinate-conversion command record, source snapshot, and `data/02-aligned/manifest.private.json`. Python verifies every retained BED call with the expected complement/order conversion from source, checks VCF agreement, and verifies all original QC hashes before and after. Sample metadata is preserved byte-for-byte. `scripts/verify_reference_alignment.py` independently exports each BED with the pinned PLINK build and compares every marker, allele label, sample order, and genotype against the VCF; all four comparisons passed. Temporary full exports are removed after verification; small logs and command records remain private.
 
 The alignment script supports Windows with WSL Ubuntu and native Linux using the existing `tsa2024-imputation` environment. It refuses to overwrite a completed alignment. Do not move or delete original QC files. Old pilot outputs are not a dependency of this whole-dataset alignment; they remain separately archived.
 

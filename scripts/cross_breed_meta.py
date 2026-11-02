@@ -23,8 +23,8 @@ def write_table(path,records):
 def aligned_family(scenario):
     maps=[]
     for breed in ['LR','GSP']:
-        fam=rows(ROOT/f'data/aligned/{scenario}/{breed}/2024TSA_{breed}.fam')
-        bim=rows(ROOT/f'data/aligned/{scenario}/{breed}/2024TSA_{breed}.bim')
+        fam=rows(ROOT/f'data/02-aligned/{scenario}/{breed}/2024TSA_{breed}.fam')
+        bim=rows(ROOT/f'data/02-aligned/{scenario}/{breed}/2024TSA_{breed}.bim')
         assert len({r[1] for r in bim})==len(bim),'Duplicate marker IDs'
         maps.append({r[1]:(r[0],r[3],r[4],r[5]) for r in bim})
         if breed=='LR':ids={r[1] for r in fam}
@@ -54,7 +54,10 @@ def figures(records,threshold,stem,output):
         take=np.unique(np.r_[np.arange(min(100,len(observed))),np.linspace(0,len(observed)-1,min(1000,len(observed))).astype(int)])
         y=-np.log10(np.maximum(observed[take],1e-300));qax.scatter(expected[take],y,s=5)
         limit=max(expected.max(),y.max());qax.plot([0,limit],[0,limit],ls='--',color='.5');qax.set(title=label,xlabel='Expected −log₁₀(p)',ylabel='Observed −log₁₀(p)')
-    axes[-1].set(xticks=[(x[c==ch].min()+x[c==ch].max())/2 for ch in offsets],xticklabels=list(offsets),xlabel='CanFam4 chromosome')
+    for ax in axes:
+        ax.set(xticks=[(x[c==ch].min()+x[c==ch].max())/2 for ch in offsets], xticklabels=list(offsets))
+        ax.tick_params(axis='x', labelbottom=True, labelsize=8)
+    axes[-1].set_xlabel('CanFam4 chromosome')
     fig.suptitle(stem+' — separate cross-breed analyses');fig.tight_layout();fig.savefig(output/(stem+'_manhattan.png'),dpi=130);plt.close(fig)
     qq.tight_layout();qq.savefig(output/(stem+'_qq.png'),dpi=130);plt.close(qq)
     best=sorted([r for r in records if np.isfinite(r['iv_p'])],key=lambda r:r['iv_p'])[:10]
@@ -120,5 +123,5 @@ def run(run_dir,output):
     return summary
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run-dir',type=Path,default=ROOT/'data/gwas/measured-20261004');p.add_argument('--results-dir',type=Path,default=ROOT/'results/private/version2/08_cross_breed')
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run-dir',type=Path,default=ROOT/'data/07-gwas/measured-20261004');p.add_argument('--results-dir',type=Path,default=ROOT/'results/private/version2/08_cross_breed')
     args=p.parse_args();run(args.run_dir,args.results_dir)

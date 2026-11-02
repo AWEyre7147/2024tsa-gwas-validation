@@ -25,7 +25,7 @@ At each anchor, omit each case in turn and recalculate the observed case-minus-c
 
 ## Execution and scope
 
-`scripts/review_gwas_candidates.py` verifies the reporting policy, source genotype hashes and relevant native result receipts. It writes regional figures and private genotype, neighbor-correlation, model and summary tables under `results/private/version2/09_candidate_review/`. Notebook 09 calls this script and embeds all 19 figures in its private executed copy under `results/private/version2/notebooks/`.
+`scripts/review_gwas_candidates.py` verifies the reporting policy, source genotype hashes and relevant native result receipts. It writes regional figures and private genotype, neighbor-correlation, model and summary tables under `results/private/version2/09_candidate_review/`. Notebook 09 displays all 19 saved figures in its public preview and retains a private execution copy. Regenerating the review requires explicit analysis enablement.
 
 The notebook executed successfully. Genotype count totals, carrier totals and anchor self-correlations were checked, and original measured inputs remain unchanged. This review does not create conditional discoveries, credible sets or causal fine-mapping conclusions. Historical effect matching, stronger small-sample assessment and biological annotation remain separate work.
 

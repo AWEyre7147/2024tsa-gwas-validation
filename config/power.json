@@ -1,0 +1,18 @@
+{
+  "seed": 20261013,
+  "output_directory": "results/private/version2/06_power/20261013-pilot",
+  "generating_model": "Binomial-logit mixed model with measured genotype, sex and saved LOCO K; rejection sampling conditional on observed case count",
+  "effect_allele": "Source analytical ALT; illustrative effect grid, not historical effect directions",
+  "odds_ratios": [1, 1.5, 2, 3, 5],
+  "variance_multipliers": [0, 1, 2],
+  "representative_maf_bins": [[0.025, 0.1], [0.1, 0.2], [0.2, 0.500001]],
+  "representative_selection": "Deterministic SHA256 rank among measured MAF-eligible markers, without consulting association p-values",
+  "schemes": ["success-vs-behelim", "not-behelim-vs-behelim"],
+  "pilot": {"replicates": 40, "odds_ratios": [1, 1.5, 2, 3, 5], "variance_multipliers": [0, 1], "scope": "First retained LR historical target and one primary measured GWAS representative in each breed"},
+  "full": {"replicates": 1000},
+  "maximum_draw_attempts_per_replicate": 100000,
+  "intercept": "Recenter once per effect/variance scenario to the observed expected case count by Gauss-Hermite integration; then condition complete draws on that case count",
+  "thresholds": "Nominal 0.05, original conservative targeted 0.05/(18*2), or current within-breed reporting cutoff as applicable",
+  "interpretation": "Power/calibration conditional on this finite cohort and stated generating model; not observed-effect post hoc power, not extreme-tail validation",
+  "analytical_benchmark": {"maf": [0.025, 0.05, 0.1, 0.2, 0.3, 0.5], "assumption": "Independent HWE controls, rare-outcome approximation; case allele frequency obtained by odds weighting control genotypes; asymptotic allele-frequency test"}
+}

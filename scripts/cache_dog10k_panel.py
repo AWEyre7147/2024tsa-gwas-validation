@@ -19,7 +19,7 @@ def checks(path):
 
 
 def ensure_panel():
-    folder=ROOT/'data/reference/dog10k';folder.mkdir(parents=True,exist_ok=True)
+    folder=ROOT/'data/02-reference/dog10k';folder.mkdir(parents=True,exist_ok=True)
     path=folder/'AutoAndXPAR.Dog10K.phased.bcf'
     if not path.exists():
         partial=path.with_name(path.name+'.partial');curl=shutil.which('curl.exe') or shutil.which('curl')
@@ -28,7 +28,7 @@ def ensure_panel():
         result=checks(partial);partial.replace(path)
     else:result=checks(path)
     index=path.with_name(path.name+'.csi')
-    original=ROOT/'data/reference/imputation-pilot/AutoAndXPAR.Dog10K.phased.bcf.csi'
+    original=ROOT/'data/02-reference/imputation-pilot/AutoAndXPAR.Dog10K.phased.bcf.csi'
     assert hashlib.md5(original.read_bytes()).hexdigest()=='78992e81d64fe2cf3dc911b07ccadf95'
     if not index.exists():shutil.copyfile(original,index)
     assert index.read_bytes()==original.read_bytes()

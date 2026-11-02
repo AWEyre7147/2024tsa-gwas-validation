@@ -9,13 +9,13 @@ import numpy as np
 
 ROOT=Path(__file__).resolve().parents[1]
 os.environ.setdefault('MPLBACKEND','Agg')
-os.environ.setdefault('MPLCONFIGDIR',str(ROOT/'data/processed/private/matplotlib-cache'))
+os.environ.setdefault('MPLCONFIGDIR',str(ROOT/'data/01-processed/private/matplotlib-cache'))
 import matplotlib.pyplot as plt
 
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--run-dir',type=Path,default=ROOT/'data/imputation/autosomal-20261003')
+    ap.add_argument('--run-dir',type=Path,default=ROOT/'data/04-imputation/autosomal-20261003')
     ap.add_argument('--results-dir',type=Path,default=ROOT/'results/private/04_imputation')
     ap.add_argument('--allow-subset',action='store_true',help='Only for an archived implementation check')
     ap.add_argument('--figures-only',action='store_true',help='Generate figures without writing any notebook')

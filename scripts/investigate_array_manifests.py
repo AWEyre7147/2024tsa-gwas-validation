@@ -13,7 +13,7 @@ import shutil
 import subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
-DEST=ROOT/'data/reference/array-manifests'
+DEST=ROOT/'data/02-reference/array-manifests'
 URLS={
  'caninehd_b.csv':'https://support.illumina.com/content/dam/illumina-support/documents/downloads/productfiles/caninehd/caninehd_b.csv',
  'CanineHTS-24_20095584_B1.csv':'https://support.illumina.com/content/dam/illumina-support/documents/downloads/productfiles/caninehd/CanineHTS-24_20095584_B1.csv',
@@ -46,10 +46,10 @@ def parse(p):
 def main():
  DEST.mkdir(parents=True,exist_ok=True)
  with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:paths=dict(pool.map(fetch,URLS.items()))
- source=next((ROOT/'data/raw').rglob('*.bim'));bim={r[1]:r for r in [x.split() for x in source.read_text().splitlines()]}
+ source=next((ROOT/'data/01-raw').rglob('*.bim'));bim={r[1]:r for r in [x.split() for x in source.read_text().splitlines()]}
  excluded={}
  for b in ['GSP','LR']:
-  p=ROOT/f'data/archive/first-imputation-pilot-20261003/analysis/{b}/harmonization.private.tsv'
+  p=ROOT/f'data/00-archive/first-imputation-pilot-20261003/analysis/{b}/harmonization.private.tsv'
   excluded[b]=[r['marker'] for r in csv.DictReader(p.open(),delimiter='\t') if r['status']=='palindromic_excluded']
  summaries={}
  for name,p in paths.items():

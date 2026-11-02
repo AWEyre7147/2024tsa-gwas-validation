@@ -39,9 +39,9 @@ All 38 autosomes were scanned in all four breed/scheme groups. Scheme A retained
 
 Scheme A median chi-square ratios were 1.140 / 1.105 for LR and 1.083 / 1.074 for GSP. GEMMA alternative MLE variance-ratio boundaries occurred at all LR markers, 162,974/162,990 GSP A markers and 164,628/165,064 GSP B markers. Twelve LR A and eight LR B alternative effect/Wald estimates were unavailable, while their score tests remained finite. No GSP effect/Wald estimates were unavailable. These diagnostics do not establish accurate extreme-tail calibration.
 
-All 152 supplied relationship matrices matched independent reconstruction from aligned measured calls. All 152 GMMAT sample orders and 456 selected score, variance and p-value calculations were verified directly from saved null fits. Full output checks also verified per-marker ordering, counted alleles, allele frequencies, model sizes and file receipts. Native runtime information is recorded in `data/gwas/measured-20261004/runtime.private.json`. Original genotypes and targeted replication outputs are unchanged.
+All 152 supplied relationship matrices matched independent reconstruction from aligned measured calls. All 152 GMMAT sample orders and 456 selected score, variance and p-value calculations were verified directly from saved null fits. Full output checks also verified per-marker ordering, counted alleles, allele frequencies, model sizes and file receipts. Native runtime information is recorded in `data/07-gwas/measured-20261004/runtime.private.json`. Original genotypes and targeted replication outputs are unchanged.
 
-Results are under `data/gwas/measured-20261004/`; compressed paired tables and eight figure files are under `results/private/version2/07_breed_specific_gwas/`. The executed review copy with embedded figures is `results/private/version2/notebooks/07_breed_specific_gwas.ipynb`.
+Results are under `data/07-gwas/measured-20261004/`; compressed paired tables and eight figure files are under `results/private/version2/07_breed_specific_gwas/`. The executed review copy with embedded figures is `results/private/version2/notebooks/07_breed_specific_gwas.ipynb`.
 
 Sources: [GMMAT score-test documentation](https://search.r-project.org/CRAN/refmans/GMMAT/html/glmm.score.html), [GEMMA manual](https://github.com/genetics-statistics/GEMMA/blob/master/doc/manual.tex).
 

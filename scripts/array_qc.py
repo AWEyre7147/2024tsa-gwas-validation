@@ -1,7 +1,7 @@
 """Run reproducible, breed-specific PLINK 1.9 array QC; retain private reports.
 
 Python requires numpy. Supply a recorded PLINK environment with --environment.
-Inputs are selected exclusively from data/input/manifest.private.json.
+Inputs are selected exclusively from data/01-input/manifest.private.json.
 Existing QC outputs are never overwritten.
 """
 from pathlib import Path
@@ -76,7 +76,7 @@ def main():
     assert sha(exe) == env['executable_sha256']
     version = subprocess.run([str(exe), '--version'], check=True, capture_output=True, text=True).stdout.strip()
     assert 'v1.9.0' in version and '27 Sep 2026' in version
-    input_manifest = root / 'data/input/manifest.private.json'
+    input_manifest = root / 'data/01-input/manifest.private.json'
     inputs = json.loads(input_manifest.read_text())
     prefixes = {}
     tracked_hashes = dict(inputs['source_hashes'])
@@ -87,7 +87,7 @@ def main():
         fam_path = next(study_path(root,p) for p in ds['files'] if p.endswith('.fam'))
         prefixes[ds['scenario'], ds['breed']] = fam_path.with_suffix('')
     for p, h in tracked_hashes.items(): assert sha(study_path(root,p)) == h
-    outroot = (args.output or root / 'data/qc').resolve()
+    outroot = (args.output or root / 'data/02-qc').resolve()
     assert outroot.is_relative_to(root),'Keep QC outputs inside the repository'
     if outroot.exists(): raise FileExistsError('QC output exists; use a new directory for a new run')
     reports = outroot / 'reports' / args.run_id

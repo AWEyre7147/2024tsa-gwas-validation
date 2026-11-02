@@ -56,7 +56,7 @@ def review(run,scan_results,output):
             if windows and windows[-1]['chromosome']==c and start<=windows[-1]['end']:
                 windows[-1]['end']=max(end,windows[-1]['end']);windows[-1]['selected'].append(row)
             else:windows.append(dict(chromosome=c,start=start,end=end,selected=[row]))
-        prefix=ROOT/'data/aligned/success-vs-behelim'/breed/('2024TSA_'+breed)
+        prefix=ROOT/'data/02-aligned/success-vs-behelim'/breed/('2024TSA_'+breed)
         fam,bim,g=decode(prefix);marker_index={r[1]:i for i,r in enumerate(bim)}
         case=np.array([r[5]=='2' for r in fam]);male=np.array([r[4]=='1' for r in fam])
         assert len({r[1] for r in fam})==len(fam)
@@ -131,7 +131,7 @@ def review(run,scan_results,output):
             axes[1,1].hist(all_pairs,bins=25,density=True,alpha=.5,label='All dog pairs',color='#246b8f')
             if len(carrier_pairs):axes[1,1].hist(carrier_pairs,bins=15,density=True,alpha=.5,label='Minor-allele carrier pairs',color='#b05c36')
             axes[1,1].set(title='Descriptive genetic similarity',xlabel='Chromosome-excluded relationship value',ylabel='Density');axes[1,1].legend(fontsize=8)
-            fig.suptitle(region_id+' — '+anchor['marker']+' (Scheme A)')
+            fig.suptitle(f"{region_id} — chr{window['chromosome']}:{entry['anchor_position']} (Scheme A)")
             fig.subplots_adjust(top=.9,right=.86,hspace=.4,wspace=.4)
             fig.colorbar(scatter,cax=fig.add_axes([.89,.56,.015,.32]),label='Measured r² with display anchor')
             fig.savefig(output/(region_id+'.png'),dpi=150,bbox_inches='tight');plt.close(fig)
@@ -147,7 +147,7 @@ def review(run,scan_results,output):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--run-dir',type=Path,default=ROOT/'data/gwas/measured-20261004')
+    p.add_argument('--run-dir',type=Path,default=ROOT/'data/07-gwas/measured-20261004')
     p.add_argument('--scan-results',type=Path,default=ROOT/'results/private/version2/07_breed_specific_gwas')
     p.add_argument('--results-dir',type=Path,default=ROOT/'results/private/version2/09_candidate_review')
     args=p.parse_args();review(args.run_dir,args.scan_results,args.results_dir)

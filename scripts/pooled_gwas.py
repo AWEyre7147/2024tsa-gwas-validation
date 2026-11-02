@@ -10,14 +10,14 @@ from notebook_support import read_json,file_digest,study_path,verify_datasets
 ROOT=Path(__file__).resolve().parents[1]
 
 def run(output,tools,chromosomes):
-    cfg=read_json(ROOT/'config/cross_breed.json');alignment=read_json(ROOT/'data/aligned/manifest.private.json');verify_datasets(ROOT,alignment)
+    cfg=read_json(ROOT/'config/cross_breed.json');alignment=read_json(ROOT/'data/02-aligned/manifest.private.json');verify_datasets(ROOT,alignment)
     sources={p:h for d in alignment['datasets'] for p,h in d['files'].items() if Path(p).suffix in ['.bed','.bim','.fam']}
     pruned=set();broad=[]
     for breed in ['LR','GSP']:
-        prefix=ROOT/f'data/structure/20261002-pca-umap-tsne/{breed}/02_pruned_genotypes'
+        prefix=ROOT/f'data/03-structure/20261002-pca-umap-tsne/{breed}/02_pruned_genotypes'
         pruned.update(r[1] for r in rows(prefix.with_suffix('.bim')))
         sources[str(prefix.with_suffix('.bim').relative_to(ROOT))]=file_digest(prefix.with_suffix('.bim'))
-        fam,bim,g=decode(ROOT/f'data/aligned/not-behelim-vs-behelim/{breed}/2024TSA_{breed}')
+        fam,bim,g=decode(ROOT/f'data/02-aligned/not-behelim-vs-behelim/{breed}/2024TSA_{breed}')
         broad.append((fam,bim,g,{r[1]:i for i,r in enumerate(bim)}))
     common=aligned_family('not-behelim-vs-behelim');background=sorted(common&pruned)
     zparts=[];background_keep=np.ones(len(background),bool)
@@ -39,7 +39,7 @@ def run(output,tools,chromosomes):
     for scenario in cfg['schemes']:
         shared=aligned_family(scenario);blocks=[];maps=[]
         for breed in ['LR','GSP']:
-            fam,bim,g=decode(ROOT/f'data/aligned/{scenario}/{breed}/2024TSA_{breed}')
+            fam,bim,g=decode(ROOT/f'data/02-aligned/{scenario}/{breed}/2024TSA_{breed}')
             blocks.append((fam,bim,g));maps.append({r[1]:i for i,r in enumerate(bim)})
         keys=sorted(shared,key=lambda k:(int(blocks[0][1][maps[0][k]][0]),int(blocks[0][1][maps[0][k]][3]),k))
         arrays=[g[[mp[k] for k in keys]] for (_,_,g),mp in zip(blocks,maps)]
@@ -77,5 +77,5 @@ def run(output,tools,chromosomes):
     dump(output/'manifest.private.json',dict(status='exploratory_pooled_scans_complete',config=cfg,groups=groups,jobs=jobs,source_hashes_unchanged=True,publication_inclusion_undecided=True))
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,default=ROOT/'data/gwas/pooled-measured-20261004');p.add_argument('--tools',type=Path,default=Path.home()/'anaconda3/envs/tsa2024-association/bin');p.add_argument('--chromosomes',nargs='+',type=int,default=list(range(1,39)))
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,default=ROOT/'data/07-gwas/pooled-measured-20261004');p.add_argument('--tools',type=Path,default=Path.home()/'anaconda3/envs/tsa2024-association/bin');p.add_argument('--chromosomes',nargs='+',type=int,default=list(range(1,39)))
     a=p.parse_args();assert set(a.chromosomes)<=set(range(1,39));run(a.output,a.tools,a.chromosomes)

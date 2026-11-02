@@ -39,12 +39,12 @@ def run_script(root, name, *arguments, linux=False):
 def plink_environment(root):
     """Locate the pinned native binary without importing analysis dependencies."""
     folder = 'plink-1.9.0-20260927-win64' if os.name == 'nt' else 'plink-1.9.0-20260927-linux64'
-    binary = root/'data/tools'/folder/('plink.exe' if os.name == 'nt' else 'plink')
+    binary = root/'data/02-tools'/folder/('plink.exe' if os.name == 'nt' else 'plink')
     if not binary.exists():
         run_script(root, 'setup_plink.py')
     version = subprocess.check_output([str(binary), '--version'], text=True)
     assert 'PLINK v1.9.0' in version
-    path = root/'data/processed/private'/f'notebook-plink-{os.name}.private.json'
+    path = root/'data/01-processed/private'/f'notebook-plink-{os.name}.private.json'
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(dict(executable=str(binary), executable_sha256=file_digest(binary)), indent=2), encoding='utf-8')
     return path

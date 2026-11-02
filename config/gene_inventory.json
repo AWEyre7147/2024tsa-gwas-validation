@@ -1,0 +1,13 @@
+{
+  "assembly": "ROS_Cfam_1.0",
+  "ensembl_accession": "GCA_014441545.1",
+  "refseq_accession": "GCF_014441545.1",
+  "ensembl_release": 116,
+  "refseq_release": 106,
+  "resource_directory": "data/02-reference/annotation-ros",
+  "output_directory": "data/02-reference/gene-inventory/ros-116-106-20261013",
+  "scope": "All annotated sequences and gene biotypes, including sex chromosomes and unplaced scaffolds",
+  "identity": "Provider-specific records; no symbol-based merging",
+  "coordinates": "1-based inclusive; retain source sequence identifiers and assembly-specific aliases",
+  "formats": ["SQLite", "gene TSV.gz", "transcript TSV.gz", "optional Parquet"]
+}

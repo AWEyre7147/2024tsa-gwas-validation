@@ -20,8 +20,8 @@ import numpy as np
 from investigate_array_manifests import parse
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'data/aligned'
-REF = ROOT / 'data/reference/genomes'
+OUT = ROOT / 'data/02-aligned'
+REF = ROOT / 'data/02-reference/genomes'
 COMP = str.maketrans('ACGT', 'TGCA')
 
 
@@ -96,7 +96,7 @@ def main():
     OUT.mkdir(exist_ok=True); reports=OUT/'reports'; reports.mkdir(exist_ok=True)
     executed_source=Path(__file__).read_bytes()
     (reports/'reference_alignment.executed.py').write_bytes(executed_source)
-    qcpath=ROOT/'data/qc/manifest.private.json'; qc=json.loads(qcpath.read_text())
+    qcpath=ROOT/'data/02-qc/manifest.private.json'; qc=json.loads(qcpath.read_text())
     assert qc['status']=='complete'
     original={p:h for ds in qc['datasets'] for p,h in ds['files'].items()}
     assert all(sha(ROOT/p)==h for p,h in original.items())
@@ -109,7 +109,7 @@ def main():
             union[r[1]]=r
     bed=reports/'qc_sites.canfam3.bed'
     bed.write_text(''.join(f'chr{r[0]}\t{int(r[3])-1}\t{r[3]}\t{s}\t0\t+\n' for s,r in union.items()))
-    assets=ROOT/'data/reference/imputation-pilot'
+    assets=ROOT/'data/02-reference/imputation-pilot'
     mapped=reports/'qc_sites.canfam4.bed'; unmapped=reports/'unmapped.canfam4.bed'
     if os.name == 'nt':
         command=['wsl.exe','-d','Ubuntu','--','/home/aweyr/anaconda3/envs/tsa2024-imputation/bin/liftOver',wslpath(bed),wslpath(assets/'canFam3ToCanFam4.over.chain.gz'),wslpath(mapped),wslpath(unmapped)]
@@ -120,7 +120,7 @@ def main():
     result.check_returncode()
     hits={r[3]:r for r in rows(mapped)}; destinations=Counter((r[0],r[1]) for r in hits.values())
     cf3,cf4=TwoBit(REF/'canFam3.2bit'),TwoBit(REF/'canFam4.2bit')
-    manifestpath=ROOT/'data/reference/array-manifests/caninehd_b.csv'
+    manifestpath=ROOT/'data/02-reference/array-manifests/caninehd_b.csv'
     _,_,manifest,_=parse(manifestpath)
     decisions={}; convention=Counter()
     for s,r in union.items():

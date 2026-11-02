@@ -1,5 +1,5 @@
 library(jsonlite)
-root <- normalizePath(commandArgs(trailingOnly=TRUE)[1]);run <- file.path(root,'data/gwas/pooled-measured-20261004')
+root <- normalizePath(commandArgs(trailingOnly=TRUE)[1]);run <- file.path(root,'data/07-gwas/pooled-measured-20261004')
 manifest <- fromJSON(file.path(run,'manifest.private.json'));checks <- list()
 for(i in seq_len(nrow(manifest$jobs))){
  folder <- file.path(root,manifest$jobs$folder[i]);info <- fromJSON(file.path(folder,'diagnostics.private.json'))

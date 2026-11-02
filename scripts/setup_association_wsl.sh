@@ -8,4 +8,4 @@ if [ ! -d "$task_prefix/conda-meta" ]; then
   "$task_conda" create -y -p "$task_prefix" --file scripts/association-linux-64.lock.txt
 fi
 "$task_conda" run --no-capture-output -p "$task_prefix" Rscript scripts/install_gmmat.R "$task_root"
-"$task_conda" list -p "$task_prefix" --explicit > data/tools/association/conda-explicit.private.txt
+"$task_conda" list -p "$task_prefix" --explicit > data/02-tools/association/conda-explicit.private.txt

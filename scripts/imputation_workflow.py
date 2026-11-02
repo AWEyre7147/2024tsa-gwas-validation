@@ -24,7 +24,7 @@ from reference_alignment import TwoBit
 from cache_dog10k_panel import ensure_panel
 
 ROOT=Path(__file__).resolve().parents[1]
-ASSETS=ROOT/'data/reference/imputation-pilot'
+ASSETS=ROOT/'data/02-reference/imputation-pilot'
 PANEL='https://kiddlabshare.med.umich.edu/dog10K/phased-imputation-panel/AutoAndXPAR.Dog10K.phased.bcf'
 
 
@@ -85,7 +85,7 @@ class Workflow:
         self.logs=self.out/'logs';self.logs.mkdir(exist_ok=True)
         self.tools=args.tools;self.config=json.loads(args.config.read_text())
         self.env=dict(os.environ);self.env['PATH']=str(self.tools)+':'+self.env.get('PATH','')
-        self.inputs=json.loads((ROOT/'data/aligned/manifest.private.json').read_text())
+        self.inputs=json.loads((ROOT/'data/02-aligned/manifest.private.json').read_text())
         assert self.inputs['status']=='complete'
         self.sources={p:h for d in self.inputs['datasets'] for p,h in d['files'].items()}
         self.verify_sources()
@@ -97,18 +97,18 @@ class Workflow:
         self.keys={r:r.replace(':','_').replace('-','_') for r in self.regions}
         assets=json.loads((ASSETS/'assets.json').read_text())
         pinned={str(ASSETS/name):assets[name]['sha256'] for name in ['beagle.27Feb25.75f.jar','campbell_sex_average_canFam4.tar.gz','samples.txt','AutoAndXPAR.Dog10K.phased.bcf.csi','panel.md5sums.txt']}
-        pinned[str(ROOT/'data/reference/genomes/canFam4.2bit')]=self.inputs['resources']['data\\reference\\genomes\\canFam4.2bit'] if 'data\\reference\\genomes\\canFam4.2bit' in self.inputs['resources'] else self.inputs['resources']['data/reference/genomes/canFam4.2bit']
+        pinned[str(ROOT/'data/02-reference/genomes/canFam4.2bit')]=self.inputs['resources']['data\\02-reference\\genomes\\canFam4.2bit'] if 'data\\02-reference\\genomes\\canFam4.2bit' in self.inputs['resources'] else self.inputs['resources']['data/02-reference/genomes/canFam4.2bit']
         assert all(sha(Path(p))==h for p,h in pinned.items()),'Reference or software asset changed'
         versions={name:subprocess.check_output([str(self.tools/name),'--version'],env=self.env,text=True).splitlines()[0] for name in ['bcftools','java']}
         versions.update(python=sys.version.split()[0],numpy=np.__version__)
-        self.plan=dict(config=self.config,regions=self.regions,source_manifest_sha256=sha(ROOT/'data/aligned/manifest.private.json'),reference_source=args.reference_source or PANEL,tools=str(self.tools),versions=versions,resource_hashes=pinned,script_sha256=sha(Path(__file__)))
+        self.plan=dict(config=self.config,regions=self.regions,source_manifest_sha256=sha(ROOT/'data/02-aligned/manifest.private.json'),reference_source=args.reference_source or PANEL,tools=str(self.tools),versions=versions,resource_hashes=pinned,script_sha256=sha(Path(__file__)))
         self.plan['dependency_script_hashes']={name:sha(ROOT/'scripts'/name) for name in ['reference_alignment.py','investigate_array_manifests.py','cache_dog10k_panel.py']}
         if args.reference_source and Path(args.reference_source).is_file():self.plan['local_reference_sha256']=sha(Path(args.reference_source))
         planpath=self.out/'plan.private.json'
         if planpath.exists():assert plans_equal(json.loads(planpath.read_text()),self.plan),'Plan changed: use a new output directory'
         else:dump(planpath,self.plan)
         (self.out/'implementation.py').write_bytes(Path(__file__).read_bytes())
-        self.genome=TwoBit(ROOT/'data/reference/genomes/canFam4.2bit')
+        self.genome=TwoBit(ROOT/'data/02-reference/genomes/canFam4.2bit')
         self.statepath=self.out/'manifest.private.json'
         self.state=json.loads(self.statepath.read_text()) if self.statepath.exists() else dict(status='preparing',assembly='CanFam4 / UU_Cfam_GSD_1.0',jobs={},association_ready=False,reference_independence_review='pending; genotype similarity screen is not proof of independence')
 
@@ -338,7 +338,7 @@ class Workflow:
 
     def execute(self):
         self.effective_reference=self.args.reference_source or str(ensure_panel())
-        if not self.args.reference_source:self.state['reference_panel']=json.loads((ROOT/'data/reference/dog10k/panel_assets.json').read_text())
+        if not self.args.reference_source:self.state['reference_panel']=json.loads((ROOT/'data/02-reference/dog10k/panel_assets.json').read_text())
         self.state['status']='running';self.save()
         for region in self.regions:
             if self.state['jobs'][region]['status']=='complete':
@@ -363,7 +363,7 @@ class Workflow:
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--config',type=Path,default=ROOT/'config/imputation.json')
-    ap.add_argument('--output',type=Path,default=ROOT/'data/imputation/autosomal-20261003')
+    ap.add_argument('--output',type=Path,default=ROOT/'data/04-imputation/autosomal-20261003')
     ap.add_argument('--tools',type=Path,default=Path.home()/'anaconda3/envs/tsa2024-imputation/bin')
     ap.add_argument('--regions',nargs='+');ap.add_argument('--reference-source')
     group=ap.add_mutually_exclusive_group(required=True);group.add_argument('--prepare-only',action='store_true');group.add_argument('--execute',action='store_true')

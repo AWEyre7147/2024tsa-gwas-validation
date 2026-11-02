@@ -30,17 +30,17 @@ PLINK `--genome` estimates IBD within breeds using the respective pruned marker 
 
 Public scripts are [genetic_structure.py](../../scripts/genetic_structure.py), and [verify_structure.py](../../scripts/verify_structure.py). Dependency versions are pinned in [requirements-structure.txt](../../scripts/requirements-structure.txt). The isolated `.venv` and all row-level artifacts remain ignored.
 
-Run the analysis with Python and `scripts/genetic_structure.py --environment data/processed/private/plink_environment.private.json`, or use the executable cells in Notebook 03. Independently validate with `scripts/verify_structure.py`. A completed analysis is not overwritten. Partial runs can resume completed, matching PLINK commands; source hashes are checked first.
+Run the analysis with Python and `scripts/genetic_structure.py --environment data/01-processed/private/plink_environment.private.json`, or use the executable cells in Notebook 03. Independently validate with `scripts/verify_structure.py`. A completed analysis is not overwritten. Partial runs can resume completed, matching PLINK commands; source hashes are checked first.
 
-Analysis files are in `data/structure/20261002-pca-umap-tsne/<scope>/`. The private manifest records software versions, seeds, parameters, script and QC-manifest hashes, figure hashes, and warnings. Tables retain pseudonymous coordinates and labels privately. QC input hashes are unchanged.
+Analysis files are in `data/03-structure/20261002-pca-umap-tsne/<scope>/`. The private manifest records software versions, seeds, parameters, script and QC-manifest hashes, figure hashes, and warnings. Tables retain pseudonymous coordinates and labels privately. QC input hashes are unchanged.
 
 PLINK emits a BLAS/LAPACK threading warning and a monomorphic-marker warning in all three PCA scopes. The latter persists with explicit `--maf 0.025`; it is not silently dismissed. Direct decoding found no monomorphic markers, with minimum MAF 0.02744 combined, 0.02586 GSP, and 0.03125 LR. Independent mean-imputed, variance-standardized genotype PCA closely matches the leading PLINK axes. Differences in relationship matrices are expected from missingness handling; the independent first-20 subspace comparison, source-call checks, and repeated fixed-seed LR embedding checks are recorded in `verification.private.json`. The cause of the warning itself has not been established. The preliminary run with warnings and its figures are retained privately for diagnostic comparison.
 
-These checks support descriptive visualization; they do not establish identities or justify freezing association covariates. BLAS behavior may produce small platform-dependent numerical differences even with fixed seeds. Genotype-based sex checks and reference-informed ancestry review remain separate work.
+These checks support descriptive visualization rather than association-model selection. BLAS behavior may produce small platform-dependent numerical differences even with fixed seeds. Genotype-based sex checks and reference-informed ancestry review remain separate work.
 
 ## Notebook and figure layout
 
-- `notebooks/03_structure_and_model_design.ipynb`: natural-language source chapter and figure-display cells, with outputs cleared.
+- `notebooks/03_structure_and_relatedness.ipynb`: readable chapter with code and reviewed saved figures.
 - `results/private/03_structure/03_structure_and_model_design.ipynb`: self-contained review notebook with nine figures embedded as standard Markdown attachments.
 - `results/private/03_structure/figures/`: PNG and SVG copies of the overview, each scope, PCA variation, nonlinear-layout sensitivity, and pairwise sharing distributions.
 
@@ -57,8 +57,8 @@ The investigator reports using ROADTRIPS2 previously because pedigrees included 
 
 ## Computational chapter
 
-`notebooks/03_structure_and_model_design.ipynb` retains the scientific narrative and study tables, adds environment selection and the analysis invocation, displays the PCA-score weighting function, and loads figures beside their interpretation. The pinned native PLINK executable is discovered from the project cache installed by `scripts/setup_plink.py`.
+`notebooks/03_structure_and_relatedness.ipynb` retains the scientific narrative and study tables, adds environment selection and the analysis invocation, displays the PCA-score weighting function, and loads figures beside their interpretation. The pinned native PLINK executable is discovered from the project cache installed by `scripts/setup_plink.py`.
 
-The original analysis remains in `data/structure/20261002-pca-umap-tsne/`. Existing platform-specific computational runs retain `version2-preview` or `version2-preview-linux` in their private output paths. These names remain stable so completed receipts and figure references can be reused. The scientific calculation is unchanged. For changed inputs or code, select a new run name.
+The original analysis remains in `data/03-structure/20261002-pca-umap-tsne/`. Existing platform-specific computational runs retain `version2-preview` or `version2-preview-linux` in their private output paths. These names remain stable so completed receipts and figure references can be reused. The scientific calculation is unchanged. For changed inputs or code, select a new run name.
 
-The WSL computational chapter was executed end to end and checked for completed-run reuse. Its dog counts, pruned-marker counts, relatedness summaries and leading PCA variance agree with the original study. Public sources have outputs cleared; executed copies and figures remain private.
+The WSL computational chapter was executed end to end and checked for completed-run reuse. Its dog counts, pruned-marker counts, relatedness summaries and leading PCA variance agree with the original study. Public notebooks now embed reviewed saved figures; original result files and full execution copies remain private.

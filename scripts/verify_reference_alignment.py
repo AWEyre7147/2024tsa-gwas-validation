@@ -14,7 +14,7 @@ def records(f):
 
 def main():
     m=json.loads((OUT/'manifest.private.json').read_text())
-    env=json.loads((ROOT/'data/processed/private/plink_environment.private.json').read_text())
+    env=json.loads((ROOT/'data/01-processed/private/plink_environment.private.json').read_text())
     exe=Path(env['executable']);assert sha(exe)==env['executable_sha256']
     results=[]
     for ds in m['datasets']:

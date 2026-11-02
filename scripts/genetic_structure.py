@@ -18,7 +18,7 @@ import warnings
 os.environ.setdefault('NUMBA_NUM_THREADS', '1')
 os.environ.setdefault('OMP_NUM_THREADS', '1')
 os.environ.setdefault('MPLBACKEND', 'Agg')
-_plot_cache = Path(__file__).resolve().parents[1] / 'data/processed/private/matplotlib-cache'
+_plot_cache = Path(__file__).resolve().parents[1] / 'data/01-processed/private/matplotlib-cache'
 _plot_cache.mkdir(parents=True, exist_ok=True)
 os.environ.setdefault('MPLCONFIGDIR', str(_plot_cache))
 import numpy as np
@@ -64,7 +64,7 @@ def main():
     ap.add_argument('--output',type=Path,help='Separate run directory inside the repository')
     ap.add_argument('--figures',type=Path,help='Separate figure directory inside the repository')
     args=ap.parse_args(); root=args.root.resolve()
-    out=(args.output or root/'data/structure/20261002-pca-umap-tsne').resolve()
+    out=(args.output or root/'data/03-structure/20261002-pca-umap-tsne').resolve()
     figures=(args.figures or root/'results/private/03_structure/figures').resolve()
     assert out.is_relative_to(root) and figures.is_relative_to(root),'Keep generated outputs inside the study repository'
     private_notebook=root/'results/private/03_structure/03_structure_and_model_design.ipynb'
@@ -72,7 +72,7 @@ def main():
     out.mkdir(parents=True,exist_ok=True); figures.mkdir(parents=True,exist_ok=True)
     env=json.loads(args.environment.read_text()); exe=Path(env['executable'])
     assert sha(exe)==env['executable_sha256']
-    qm=root/'data/qc/manifest.private.json'; qc=json.loads(qm.read_text())
+    qm=root/'data/02-qc/manifest.private.json'; qc=json.loads(qm.read_text())
     assert qc['status']=='complete'
     tracked={}; prefixes={}
     for d in qc['datasets']:

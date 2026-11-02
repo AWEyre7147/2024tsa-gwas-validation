@@ -1,0 +1,19 @@
+{
+  "scope": "18 historical targets and primary Scheme A breed-specific Chapter 09 candidates; cross-breed candidates deferred",
+  "target_assembly": "ROS_Cfam_1.0",
+  "refseq_assembly": "GCF_014441545.1",
+  "ensembl_assembly": "GCA_014441545.1",
+  "ensembl_release": 116,
+  "refseq_release": 106,
+  "nearest_genes_per_provider": 3,
+  "context_flank_bp": 25,
+  "minimum_context_bases": 45,
+  "maximum_context_mismatches": 2,
+  "liftover_min_match": 1.0,
+  "historical_source": "docs/references/2013TSA Significant Hits.md",
+  "historical_availability": "data/06-replication/target-preparation-20261004/target_availability.private.tsv",
+  "candidate_review": "results/private/version2/09_candidate_review/summary.private.json",
+  "scan_results": "results/private/version2/07_breed_specific_gwas",
+  "resource_directory": "data/02-reference/annotation-ros",
+  "output_directory": "results/private/version2/10_annotation/ros-20261006"
+}

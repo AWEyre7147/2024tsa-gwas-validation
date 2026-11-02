@@ -40,17 +40,17 @@ def standardized_background(prefix, aligned_bim):
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--output',type=Path,default=ROOT/'data/replication/models-aligned-20261004')
+    ap.add_argument('--output',type=Path,default=ROOT/'data/06-replication/models-aligned-20261004')
     ap.add_argument('--tools',type=Path,default=Path.home()/'anaconda3/envs/tsa2024-association/bin')
     ap.add_argument('--calibration-replicates',type=int)
     args=ap.parse_args();out=args.output.resolve();out.mkdir(parents=True,exist_ok=True)
     cfg=read_json(ROOT/'config/replication.json')
     if args.calibration_replicates is not None:cfg['calibration_replicates']=args.calibration_replicates
     assert cfg['calibration_replicates']>=0
-    prep=ROOT/'data/replication/target-preparation-20261004'
-    alignment=read_json(ROOT/'data/aligned/manifest.private.json');verify_datasets(ROOT,alignment)
-    background=ROOT/'data/structure/20261002-pca-umap-tsne/LR/02_pruned_genotypes'
-    aligned_bim=ROOT/'data/aligned/not-behelim-vs-behelim/LR/2024TSA_LR.bim'
+    prep=ROOT/'data/06-replication/target-preparation-20261004'
+    alignment=read_json(ROOT/'data/02-aligned/manifest.private.json');verify_datasets(ROOT,alignment)
+    background=ROOT/'data/03-structure/20261002-pca-umap-tsne/LR/02_pruned_genotypes'
+    aligned_bim=ROOT/'data/02-aligned/not-behelim-vs-behelim/LR/2024TSA_LR.bim'
     source={str(p.relative_to(ROOT)):file_digest(p) for p in [*background.parent.glob('02_pruned_genotypes.b*'),background.with_suffix('.fam'),aligned_bim,prep/'allele_counts.private.tsv',*prep.glob('*_dosages.private.tsv')]}
     versions=dict(gemma=subprocess.check_output([str(args.tools/'gemma'),'-h'],text=True).splitlines()[:4],
         R=subprocess.check_output([str(args.tools/'Rscript'),'--version'],text=True).strip(),

@@ -6,7 +6,7 @@ import os
 
 ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault('MPLBACKEND', 'Agg')
-os.environ.setdefault('MPLCONFIGDIR', str(ROOT/'data/processed/private/matplotlib-cache'))
+os.environ.setdefault('MPLCONFIGDIR', str(ROOT/'data/01-processed/private/matplotlib-cache'))
 import matplotlib.pyplot as plt
 
 
@@ -14,7 +14,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--figures-only',action='store_true',help='Generate figures without writing any notebook')
     parser.add_argument('--results-dir',type=Path,default=ROOT/'results/private/04_imputation')
-    parser.add_argument('--run-dir',type=Path,default=ROOT/'data/imputation/autosomal-20261003')
+    parser.add_argument('--run-dir',type=Path,default=ROOT/'data/04-imputation/autosomal-20261003')
     args=parser.parse_args()
     review = args.run_dir/'review'
     summary = json.loads((review/'review.private.json').read_text(encoding='utf-8'))

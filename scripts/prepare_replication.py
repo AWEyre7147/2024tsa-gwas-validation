@@ -35,11 +35,11 @@ def allele_counts(dosages):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output',type=Path,default=ROOT/'data/replication/target-preparation-20261004')
+    parser.add_argument('--output',type=Path,default=ROOT/'data/06-replication/target-preparation-20261004')
     args=parser.parse_args();out=args.output.resolve();out.mkdir(parents=True,exist_ok=True)
-    alignment=read_json(ROOT/'data/aligned/manifest.private.json')
+    alignment=read_json(ROOT/'data/02-aligned/manifest.private.json')
     assert alignment['status']=='complete';verify_datasets(ROOT,alignment)
-    with (ROOT/'data/aligned/reports/replication_target_alignment.private.tsv').open(encoding='utf-8',newline='') as handle:
+    with (ROOT/'data/02-aligned/reports/replication_target_alignment.private.tsv').open(encoding='utf-8',newline='') as handle:
         targets=[row for row in csv.DictReader(handle,delimiter='\t') if row['breed']=='LR']
     assert len(targets)==18 and len({row['historical_target'] for row in targets})==18
     available=[row for row in targets if row['QC_status']=='retained']
@@ -99,7 +99,7 @@ def main():
         observed_dosages_independently_verified_with_plink=True,association_tests_performed=False,
         historical_direction_status='Requires allele-specific source review; not inferred from ALT labels',
         model_status='awaiting candidate-model choice and calibration',
-        source_alignment_manifest_sha256=file_digest(ROOT/'data/aligned/manifest.private.json'),commands=commands)
+        source_alignment_manifest_sha256=file_digest(ROOT/'data/02-aligned/manifest.private.json'),commands=commands)
     (out/'manifest.private.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({k:v for k,v in result.items() if k!='commands'},indent=2))
 

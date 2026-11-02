@@ -1,6 +1,6 @@
 args <- commandArgs(trailingOnly=TRUE)
 root <- normalizePath(args[1])
-folder <- file.path(root, "data", "tools", "association")
+folder <- file.path(root, "data", "02-tools", "association")
 dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 options(repos=c(CRAN="https://cloud.r-project.org"), timeout=300)
 install_pinned <- function(package, version) {

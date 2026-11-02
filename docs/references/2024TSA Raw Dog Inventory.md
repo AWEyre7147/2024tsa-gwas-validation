@@ -1,8 +1,8 @@
 # 2024TSA Raw Dog Inventory
 
-Public aggregate note. January 2024 is the primary metadata source under the investigator's assumption that earlier genotyping issues were resolved. Counts describe metadata coverage, before genetic QC.
+Public aggregate note. January 2024 records supply breed, sex and outcomes. Counts describe metadata coverage before genetic QC.
 
-| Breed | January records | Unique genotype-ID links |
+| Breed | January records | Records with genotype data |
 | --- | ---: | ---: |
 | GSP | 134 | 123 |
 | LR | 48 | 48 |
